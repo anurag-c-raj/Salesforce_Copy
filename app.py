@@ -1,49 +1,51 @@
 import streamlit as st
 from PIL import Image
 
-# Set page configuration to wide mode
-st.set_page_config(layout="wide", page_title="Salesforce Work Order Viewer")
+# Set page configuration with a Page Icon
+# You can use an emoji like "☁️" or a path to a local file like "favicon.ico"
+st.set_page_config(
+    layout="wide", 
+    page_title="Salesforce",
+    page_icon="salesforce-icon.png" 
+)
 
-# Custom CSS to force the image to fit the container width and handle scrolling
+# Custom CSS for the full-width, scrollable experience
 st.markdown(
     """
     <style>
-    /* Remove padding from the main block */
+    /* Remove padding to make it look like a real browser window */
     .block-container {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        padding-left: 0rem;
-        padding-right: 0rem;
+        padding: 0rem;
     }
     
-    /* Ensure the image container is scrollable and image is responsive */
+    /* Ensure the image stretches horizontally and scrolls vertically */
     .stImage > img {
-        width: 100%;
-        height: auto;
+        width: 100% !important;
+        height: auto !important;
         display: block;
     }
-    
-    /* Disable user-agent zooming/pinching on mobile if desired 
-       Note: Streamlit doesn't natively support disabling browser-level zoom, 
-       but we can hint via viewport meta tags if this were a raw HTML app. */
+
+    /* Hide the Streamlit header/footer for a cleaner 'full page' look */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
     </style>
     """,
     unsafe_allow_html=True,
 )
 
 def main():
-    # Load the image
     image_path = "Salesforce.png"
     
     try:
+        # Open the work order image
         img = Image.open(image_path)
         
-        # Display the image
-        # use_container_width=True ensures it fits the screen horizontally
-        st.image(img, use_container_width=True)
+        # Display using the 2026 'stretch' parameter
+        st.image(img, width="stretch")
         
     except FileNotFoundError:
-        st.error(f"Error: {image_path} not found. Please ensure the image is in the same directory as this script.")
+        st.error(f"Error: {image_path} not found. Ensure the image is in the same folder.")
 
 if __name__ == "__main__":
     main()
