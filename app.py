@@ -1,38 +1,34 @@
 import streamlit as st
 from PIL import Image
 
-# 1. Set page config with your cloud icon and title
+# Set page configuration with a Page Icon
+# You can use an emoji like "☁️" or a path to a local file like "favicon.ico"
 st.set_page_config(
     layout="wide", 
     page_title="Salesforce",
     page_icon="salesforce-icon.png" 
 )
 
-# 2. Inject CSS to hide all Streamlit UI elements (Header, Footer, Menu)
+# Custom CSS for the full-width, scrollable experience
 st.markdown(
     """
     <style>
-    /* Hide the top header bar and the "Made with Streamlit" footer */
-    header {visibility: hidden;}
-    footer {visibility: hidden;}
-    #MainMenu {visibility: hidden;}
-    
-    /* Remove default padding so image fills the screen */
+    /* Remove padding to make it look like a real browser window */
     .block-container {
-        padding: 0rem !important;
+        padding: 0rem;
     }
-
-    /* Force the image to stretch horizontally and allow vertical scroll */
+    
+    /* Ensure the image stretches horizontally and scrolls vertically */
     .stImage > img {
         width: 100% !important;
         height: auto !important;
         display: block;
     }
 
-    /* Target the specific container to remove top white space */
-    .stAppViewMain {
-        margin-top: -50px;
-    }
+    /* Hide the Streamlit header/footer for a cleaner 'full page' look */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
     </style>
     """,
     unsafe_allow_html=True,
@@ -42,12 +38,14 @@ def main():
     image_path = "Salesforce.png"
     
     try:
+        # Open the work order image
         img = Image.open(image_path)
-        # Using the 2026 syntax you confirmed earlier
+        
+        # Display using the 2026 'stretch' parameter
         st.image(img, width="stretch")
         
     except FileNotFoundError:
-        st.error(f"Error: {image_path} not found.")
+        st.error(f"Error: {image_path} not found. Ensure the image is in the same folder.")
 
 if __name__ == "__main__":
     main()
