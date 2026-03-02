@@ -1,34 +1,38 @@
 import streamlit as st
 from PIL import Image
 
-# Set page configuration with a Page Icon
-# You can use an emoji like "☁️" or a path to a local file like "favicon.ico"
+# 1. Set page config with your cloud icon and title
 st.set_page_config(
     layout="wide", 
     page_title="Salesforce",
     page_icon="salesforce-icon.png" 
 )
 
-# Custom CSS for the full-width, scrollable experience
+# 2. Inject CSS to hide all Streamlit UI elements (Header, Footer, Menu)
 st.markdown(
     """
     <style>
-    /* Remove padding to make it look like a real browser window */
-    .block-container {
-        padding: 0rem;
-    }
+    /* Hide the top header bar and the "Made with Streamlit" footer */
+    header {visibility: hidden;}
+    footer {visibility: hidden;}
+    #MainMenu {visibility: hidden;}
     
-    /* Ensure the image stretches horizontally and scrolls vertically */
+    /* Remove default padding so image fills the screen */
+    .block-container {
+        padding: 0rem !important;
+    }
+
+    /* Force the image to stretch horizontally and allow vertical scroll */
     .stImage > img {
         width: 100% !important;
         height: auto !important;
         display: block;
     }
 
-    /* Hide the Streamlit header/footer for a cleaner 'full page' look */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
+    /* Target the specific container to remove top white space */
+    .stAppViewMain {
+        margin-top: -50px;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -38,14 +42,12 @@ def main():
     image_path = "Salesforce.png"
     
     try:
-        # Open the work order image
         img = Image.open(image_path)
-        
-        # Display using the 2026 'stretch' parameter
+        # Using the 2026 syntax you confirmed earlier
         st.image(img, width="stretch")
         
     except FileNotFoundError:
-        st.error(f"Error: {image_path} not found. Ensure the image is in the same folder.")
+        st.error(f"Error: {image_path} not found.")
 
 if __name__ == "__main__":
     main()
